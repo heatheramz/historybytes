@@ -1,5 +1,13 @@
-const backendApiUrl = 'http://146.235.217.15:8000/generate-summary';
-const authApiUrl = 'http://146.235.217.15:8000/authenticate';
+// Use ngrok HTTPS URL for production, local HTTP for development
+const isHTTPS = window.location.protocol === 'https:';
+const baseUrl = isHTTPS ? 'https://45405eaab4d1.ngrok-free.app' : 'http://146.235.217.15:8000';
+const backendApiUrl = `${baseUrl}/generate-summary`;
+const authApiUrl = `${baseUrl}/authenticate`;
+
+// Show warning if running on HTTPS but backend is HTTP
+if (isHTTPS) {
+    console.warn('Running on HTTPS but backend may not support HTTPS. If you encounter connection issues, this is likely due to mixed content security restrictions.');
+}
 
 // Password authentication elements
 const authContainer = document.getElementById('auth-container');
