@@ -1,5 +1,5 @@
-const backendApiUrl = 'http://127.0.0.1:8000/generate-summary';
-const authApiUrl = 'http://127.0.0.1:8000/authenticate';
+const backendApiUrl = 'http://146.235.217.15:8000/generate-summary';
+const authApiUrl = 'http://146.235.217.15:8000/authenticate';
 
 // Password authentication elements
 const authContainer = document.getElementById('auth-container');
