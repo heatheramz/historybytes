@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Bytes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container" id="auth-container">
+        <h2>Enter your Password to Access Agent</h2>
+        <input type="password" id="password-input" placeholder="Enter password">
+        <button id="access-button">Access Agent</button>
+        <p id="auth-error-message" style="color: red;"></p>
+    </div>
+
+<div class="container hidden" id="main-agent-container">
+        <h1>History Bytes</h1>
+        <p>Enter a historical topic and choose an age group to get started.</p>
+
+<label for="topic-input">Historical Topic:</label>
+        <input type="text" id="topic-input" placeholder="e.g., Gallic Wars, Whiskey Rebellion" required>
+
+<label for="age-group-select">Target Age Group:</label>
+        <select id="age-group-select" required>
+            <option value="" disabled>Select Age Group</option>
+            <option value="5-8">5-8 (Elementary)</option>
+            <option value="9-12">9-12 (Middle School)</option>
+            <option value="13-18">13-18 (High School)</option>
+            <option value="Adult">Adult</option>
+        </select>
+
+<button id="generate-button">Generate Summary</button>
+
+<div class="status-message" id="status-message"></div>
+        <div class="summary-output" id="summary-output"></div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
