@@ -1,6 +1,6 @@
 // Use ngrok HTTPS URL for production, local HTTP for development
 const isHTTPS = window.location.protocol === 'https:';
-const baseUrl = isHTTPS ? 'https://c22c8caaa465.ngrok-free.app' : 'http://146.235.217.15:8000';
+const baseUrl = isHTTPS ? 'https://755071bcf7f879a8acddf5aa3bf6cd5c.serveo.net' : 'http://146.235.217.15:8000';
 const backendApiUrl = `${baseUrl}/generate-summary`;
 const authApiUrl = `${baseUrl}/authenticate`;
 
