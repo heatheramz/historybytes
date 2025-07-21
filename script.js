@@ -1,5 +1,13 @@
-const backendApiUrl = 'https://historybytes.redirectme.net/generate-summary';
-const authApiUrl = 'https://historybytes.redirectme.net/authenticate';
+// Try multiple backend URLs in case one is not working
+const possibleBackendUrls = [
+    'https://historybytes.redirectme.net',
+    'http://historybytes.redirectme.net',
+    'https://146.235.217.15:8000',
+];
+
+let backendBaseUrl = possibleBackendUrls[0]; // Default to first URL
+const backendApiUrl = `${backendBaseUrl}/generate-summary`;
+const authApiUrl = `${backendBaseUrl}/authenticate`;
 const isHTTPS = window.location.protocol === 'https:';
 
 // Show warning if running on HTTPS but backend is HTTP
@@ -21,6 +29,54 @@ const ageGroupSelect = document.getElementById('age-group-select');
 const statusMessageDiv = document.getElementById('status-message');
 const summaryOutputDiv = document.getElementById('summary-output');
 
+// Function to test backend connectivity
+async function testBackendConnectivity() {
+    console.log('Testing backend connectivity...');
+    
+    for (let i = 0; i < possibleBackendUrls.length; i++) {
+        const testUrl = possibleBackendUrls[i];
+        console.log(`Testing connection to: ${testUrl}`);
+        
+        try {
+            const response = await fetch(`${testUrl}/`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache'
+            });
+            
+            if (response.ok) {
+                console.log(`✅ Successfully connected to: ${testUrl}`);
+                backendBaseUrl = testUrl;
+                // Update the URLs
+                const newBackendApiUrl = `${backendBaseUrl}/generate-summary`;
+                const newAuthApiUrl = `${backendBaseUrl}/authenticate`;
+                
+                console.log(`Updated backend URLs:`);
+                console.log(`Auth URL: ${newAuthApiUrl}`);
+                console.log(`API URL: ${newBackendApiUrl}`);
+                
+                return { success: true, url: testUrl, authUrl: newAuthApiUrl, apiUrl: newBackendApiUrl };
+            }
+        } catch (error) {
+            console.log(`❌ Failed to connect to ${testUrl}: ${error.message}`);
+        }
+    }
+    
+    return { success: false, error: 'No backend servers are reachable' };
+}
+
+// Test connectivity on page load
+window.addEventListener('load', async () => {
+    const result = await testBackendConnectivity();
+    if (result.success) {
+        statusMessageDiv.textContent = `Connected to backend: ${result.url}`;
+        statusMessageDiv.className = 'status-message';
+    } else {
+        statusMessageDiv.textContent = `⚠️ Cannot connect to backend servers. Please check if your Oracle VM is running and accessible.`;
+        statusMessageDiv.className = 'status-message error-message';
+    }
+});
+
 // Password authentication logic
 accessButton.addEventListener('click', async () => {
     const enteredPassword = passwordInput.value;
@@ -35,10 +91,12 @@ accessButton.addEventListener('click', async () => {
     accessButton.textContent = 'Authenticating...';
     authErrorMessage.textContent = '';
     
-    console.log('Attempting authentication to:', authApiUrl);
+    // Use the current backend URL
+    const currentAuthUrl = `${backendBaseUrl}/authenticate`;
+    console.log('Attempting authentication to:', currentAuthUrl);
     
     try {
-        const response = await fetch(authApiUrl, {
+        const response = await fetch(currentAuthUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -105,11 +163,13 @@ generateButton.addEventListener('click', async () => {
     statusMessageDiv.textContent = 'Status: Sending request to AI agents...';
     summaryOutputDiv.textContent = '';
 
+    // Use the current backend URL
+    const currentApiUrl = `${backendBaseUrl}/generate-summary`;
     console.log('Attempting to generate summary for topic:', topic, 'age group:', ageGroup);
-    console.log('Backend URL:', backendApiUrl);
+    console.log('Backend URL:', currentApiUrl);
 
     try {
-        const response = await fetch(backendApiUrl, {
+        const response = await fetch(currentApiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
