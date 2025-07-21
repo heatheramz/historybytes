@@ -35,6 +35,8 @@ accessButton.addEventListener('click', async () => {
     accessButton.textContent = 'Authenticating...';
     authErrorMessage.textContent = '';
     
+    console.log('Attempting authentication to:', authApiUrl);
+    
     try {
         const response = await fetch(authApiUrl, {
             method: 'POST',
@@ -46,20 +48,35 @@ accessButton.addEventListener('click', async () => {
             }),
         });
         
+        console.log('Authentication response status:', response.status);
+        console.log('Authentication response headers:', response.headers);
+        
         if (response.ok) {
             // Authentication successful
+            console.log('Authentication successful');
             authContainer.style.display = 'none';
             mainAgentContainer.classList.remove('hidden');
             authErrorMessage.textContent = '';
         } else {
             // Authentication failed
-            const errorData = await response.json();
-            authErrorMessage.textContent = 'Incorrect password. Please try again.';
+            console.log('Authentication failed with status:', response.status);
+            const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+            console.log('Error data:', errorData);
+            authErrorMessage.textContent = `Authentication failed: ${errorData.detail || 'Incorrect password'}`;
             passwordInput.value = '';
         }
     } catch (error) {
-        console.error('Authentication error:', error);
-        authErrorMessage.textContent = 'Authentication failed. Please check your connection and try again.';
+        console.error('Authentication error details:', error);
+        console.error('Error type:', error.name);
+        console.error('Error message:', error.message);
+        
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            authErrorMessage.textContent = 'Connection failed. Please check if the server is running and accessible.';
+        } else if (error.name === 'TypeError' && error.message.includes('CORS')) {
+            authErrorMessage.textContent = 'CORS error. The server may not be configured to accept requests from this domain.';
+        } else {
+            authErrorMessage.textContent = `Connection error: ${error.message}`;
+        }
     } finally {
         // Reset button state
         accessButton.disabled = false;
@@ -88,12 +105,14 @@ generateButton.addEventListener('click', async () => {
     statusMessageDiv.textContent = 'Status: Sending request to AI agents...';
     summaryOutputDiv.textContent = '';
 
+    console.log('Attempting to generate summary for topic:', topic, 'age group:', ageGroup);
+    console.log('Backend URL:', backendApiUrl);
+
     try {
         const response = await fetch(backendApiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // No 'Authorization' header here unless you add API Key auth to FastAPI itself
             },
             body: JSON.stringify({
                 topic: topic,
@@ -101,21 +120,37 @@ generateButton.addEventListener('click', async () => {
             }),
         });
 
+        console.log('Summary generation response status:', response.status);
+        console.log('Summary generation response headers:', response.headers);
+
         if (!response.ok) {
-            const errorData = await response.json(); // FastAPI returns JSON for errors
+            const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+            console.log('Summary generation error data:', errorData);
             throw new Error(`HTTP error! Status: ${response.status}. Detail: ${errorData.detail}`);
         }
 
         const data = await response.json();
+        console.log('Summary generation successful, response data:', data);
         const summary = data.response;
 
         statusMessageDiv.textContent = 'Status: Summary generated successfully!';
         summaryOutputDiv.textContent = summary;
 
     } catch (error) {
-        console.error('Error generating summary:', error);
+        console.error('Error generating summary details:', error);
+        console.error('Error type:', error.name);
+        console.error('Error message:', error.message);
+        
         statusMessageDiv.className = 'status-message error-message';
-        statusMessageDiv.textContent = `Error: ${error.message}. Please check your backend server and console logs.`;
+        
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            statusMessageDiv.textContent = 'Connection failed. Please check if the server is running and accessible.';
+        } else if (error.name === 'TypeError' && error.message.includes('CORS')) {
+            statusMessageDiv.textContent = 'CORS error. The server may not be configured to accept requests from this domain.';
+        } else {
+            statusMessageDiv.textContent = `Error: ${error.message}. Please check your backend server and console logs.`;
+        }
+        
         summaryOutputDiv.textContent = 'Could not generate summary.';
     } finally {
         generateButton.disabled = false;
