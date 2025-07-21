@@ -1,8 +1,11 @@
 // Try multiple backend URLs in case one is not working
+// HTTPS URLs first to avoid mixed content issues on GitHub Pages
 const possibleBackendUrls = [
     'https://historybytes.redirectme.net',
-    'http://historybytes.redirectme.net',
     'https://146.235.217.15:8000',
+    // HTTP URLs as fallback (will cause mixed content warnings on HTTPS sites)
+    'http://historybytes.redirectme.net',
+    'http://146.235.217.15:8000',
 ];
 
 let backendBaseUrl = possibleBackendUrls[0]; // Default to first URL
@@ -10,9 +13,14 @@ const backendApiUrl = `${backendBaseUrl}/generate-summary`;
 const authApiUrl = `${backendBaseUrl}/authenticate`;
 const isHTTPS = window.location.protocol === 'https:';
 
-// Show warning if running on HTTPS but backend is HTTP
+// Enhanced mixed content detection and guidance
 if (isHTTPS) {
-    console.warn('Running on HTTPS but backend may not support HTTPS. If you encounter connection issues, this is likely due to mixed content security restrictions.');
+    console.warn('🔒 GitHub Pages is running on HTTPS. Mixed content security restrictions apply.');
+    console.warn('📋 To fix HTTPS issues on your Oracle VM:');
+    console.warn('1. Ensure your SSL certificate is properly installed and valid');
+    console.warn('2. Check that nginx is configured to serve HTTPS on port 443');
+    console.warn('3. Verify your domain redirectme.net points to your Oracle VM IP');
+    console.warn('4. Test direct HTTPS access: https://146.235.217.15:8000/');
 }
 
 // Password authentication elements
