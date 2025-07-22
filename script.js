@@ -1,12 +1,25 @@
 // Try multiple backend URLs in case one is not working
-// HTTPS URLs first to avoid mixed content issues on GitHub Pages
+// Local development server first for testing
 const possibleBackendUrls = [
+    'http://127.0.0.1:8000',  // Local development server
+    'http://localhost:8000',  // Alternative localhost
     'https://historybytes.redirectme.net',
     'https://146.235.217.15:8000',
     // HTTP URLs as fallback (will cause mixed content warnings on HTTPS sites)
     'http://historybytes.redirectme.net',
     'http://146.235.217.15:8000',
 ];
+
+// Display current connection issues for debugging
+console.error('🚨 CONNECTION ISSUES DETECTED:');
+console.error('1. historybytes.redirectme.net - Connection timeout (domain/DNS issue)');
+console.error('2. https://146.235.217.15:8000 - SSL protocol error (no valid certificate)');
+console.error('3. HTTP requests blocked by mixed content security');
+console.error('');
+console.error('🔧 IMMEDIATE SOLUTIONS:');
+console.error('Option A: Fix your domain SSL certificate');
+console.error('Option B: Use a reverse proxy service like ngrok or Cloudflare Tunnel');
+console.error('Option C: Temporarily test locally (not on GitHub Pages)');
 
 let backendBaseUrl = possibleBackendUrls[0]; // Default to first URL
 const backendApiUrl = `${backendBaseUrl}/generate-summary`;
@@ -200,9 +213,17 @@ generateButton.addEventListener('click', async () => {
         const data = await response.json();
         console.log('Summary generation successful, response data:', data);
         const summary = data.response;
+        const vocabularyWord = data.vocabulary_word;
 
         statusMessageDiv.textContent = 'Status: Summary generated successfully!';
-        summaryOutputDiv.textContent = summary;
+        
+        // Display summary with vocabulary highlighting if a word was provided
+        if (vocabularyWord) {
+            summaryOutputDiv.innerHTML = highlightVocabularyWord(summary, vocabularyWord);
+            console.log('Highlighted vocabulary word:', vocabularyWord);
+        } else {
+            summaryOutputDiv.textContent = summary;
+        }
 
     } catch (error) {
         console.error('Error generating summary details:', error);
@@ -226,6 +247,24 @@ generateButton.addEventListener('click', async () => {
 });
 
 statusMessageDiv.textContent = 'Ready to generate historical summaries.';
+
+// Function to highlight vocabulary word in the summary text
+function highlightVocabularyWord(summaryText, vocabularyWord) {
+    if (!vocabularyWord || !summaryText) {
+        return summaryText;
+    }
+    
+    // Escape special regex characters in the vocabulary word
+    const escapedWord = vocabularyWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    
+    // Create regex to find the word (case-insensitive, whole word match)
+    const regex = new RegExp(`\\b${escapedWord}\\b`, 'gi');
+    
+    // Replace all instances of the word with highlighted version
+    const highlightedText = summaryText.replace(regex, `<span class="vocabulary-highlight">${vocabularyWord}</span>`);
+    
+    return highlightedText;
+}
 
 // Ensure dropdown shows selected value properly
 ageGroupSelect.addEventListener('change', function() {
