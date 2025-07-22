@@ -18,6 +18,7 @@
     </div>
 
 <div class="container hidden" id="main-agent-container">
+        <a id="top"></a>
         <div class="header-section">
             <div class="text-content">
                 <h1 class="fira-code-header">History Bytes</h1>
@@ -42,6 +43,14 @@
 
 <div class="status-message" id="status-message"></div>
         <div class="summary-output" id="summary-output"></div>
+        
+        <div class="quiz-section hidden" id="quiz-section">
+            <h3>Quiz Time!</h3>
+            <p id="quiz-question">Can you define the highlighted vocabulary word based on what you just read? Write your definition in 1-2 sentences below:</p>
+            <textarea class="quiz-input" id="quiz-input" placeholder="Enter your definition here..."></textarea>
+            <button class="quiz-submit-btn" id="quiz-submit-btn">Submit Answer</button>
+            <div class="quiz-feedback hidden" id="quiz-feedback"></div>
+        </div>
     </div>
 
 <script src="script.js"></script>
