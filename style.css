@@ -191,13 +191,13 @@ button:hover {
 .quiz-feedback.correct {
     background-color: #EAEFEF;
     color: #000000;
-    border: 1px solid #155724;
+    border: 3px solid #155724;
 }
 
 .quiz-feedback.incorrect {
     background-color: #EAEFEF;
     color: #000000;
-    border: 1px solid #721c24;
+    border: 3px solid #721c24;
 }
 
 
