@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - History Bytes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="text-content">
+                <h1 class="fira-code-header">About History Bytes</h1>
+            </div>
+            <img src="assets/images/Logo.png" alt="History Bytes Logo" class="logo">
+        </div>
+
+        <div class="about-content">
+            <h2>About this Demo</h2>
+
+            <p>The History Bytes demo is a quick proof of concept for a study aid for history and English teachers. It is also an experiment to test the limitations of vibe coding app development with AI.</p>
+
+            <h2>Inspiration</h2>
+
+            <p>This project was inspired by two experiences.</p>
+
+            <p style="margin-left:1em"><em>When I was an adjunct history teacher, I taught at the freshmen and sophomore levels. These students often had different reading and writing levels. At times this made it difficult to adjust the learning in the classroom so that everyone could join the discussion and feel confident with the material. For example, some students had just passed basic paragraph writing (writing a 5 sentence paragraph) and the idea of writing a history essay was intimidating. I worked through this challenge at that time by creating worksheets that broke essay writing into bite sized portions. I also provided extra optional exercises for students who wanted more practice. How could this have been more personalized and relevant to them if I had built these with an AI agent? How would my own workload have diminished with an AI assistant?
+</em></p>
+            <p style="margin-left:1em"><em>When I was younger my mother would tutor me, my sister, and my brother after school. We all have various levels of dyslexia and she would focus on our use of language and vocabulary. Since there was a six year span between us, she often needed to adjust the lessons for each of us so that they were at the right level and we would not get bored. How would her tutoring have changed if she had an AI agent to help with these exercises?
+</em></p>
+
+            <p>It was these experiences that influenced my thinking around creating this demo project. After thinking it over, I decided to focus on vocabulary comprehension and student-driven free reading.
+            </p>
+
+            <hr/>
+
+            <h2>History Bytes</h2>
+
+            <p>An AI driven app that allows users to learn new vocabulary while reading about historical topics that interest them, written in language appropriate to their learning level. The app provides a quiz that helps them understand vocabulary in context and provides supportive feedback to encourage them to keep learning even if they get it wrong.</p>
+            
+            <h3>User Stories</h3>
+
+            <ul>
+                <li>As a student I want my homework to include learning new things that I choose to learn about so that I can stay focused longer.</li>
+                <li>As a parent I want all my children of school age to be able to explore topics in language appropriate for their grade so that they are encouraged to read and learn more.</li>
+                <li>As a teacher I want to be able to provide my students a fun way to study needed vocabulary while choosing topics that interest them so that they stay motivated.</li>
+            </ul>
+
+            <h3>The AI Experiment</h3>
+
+            <p>Every element to build this project was supported by AI tools that needed various levels of human intervention to create a successful result. Since I worked with Claude, Amazon Q, and Copilot in the past, I decided to work with Google Gemini and Cline in this project to try something new. I ran similar queries through Gemini and Cline for all aspects of planning, implementation, and troubleshooting to build this app. This included deciding how to structure the app, where to host it, how to secure it, writing the initial code, setting up the virtual machine, writing logs to help with testing and debugging, and asking general or clarifying procedural questions. The logo was also created using the AI assistant in Adobe Illustrator.</p>
+            
+            <h3>Requirements</h3>
+
+            <p>A quick list of some of the requirements that were used to build this app. Many of these were used as guardrails in prompts to help Gemini and Cline understand the project scope. Items marked with an asterisk (*) were programs or solutions selected after weighing options with Gemini.</p>
+            
+            <table class="about-table">
+                <tr>
+                    <th>Requirement Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Cost</td>
+                    <td>This app is free to build and run for 30 days.</td>
+                </tr>
+                <tr>
+                    <td>Cost</td>
+                    <td>All utilized cloud services provide a way to set up billing alarms.</td>
+                </tr>
+                <tr>
+                    <td>Tools</td>
+                    <td>Development explores new AI tools and does not include AI tools already used (i.e. Claude, Copilot, and Amazon Q).</td>
+                </tr>
+                <tr>
+                    <td>Tools</td>
+                    <td>Toolset includes VS Code, GitHub, and Adobe CS already installed.</td>
+                </tr>
+                <tr>
+                    <td>Security</td>
+                    <td>Authentication is required to keep AI agent and instance usage restricted to demonstrations.</td>
+                </tr>
+                <tr>
+                    <td>Security</td>
+                    <td>API keys and other secrets are managed in the backend and kept private.</td>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>Frontend files will be kept and shared from GitHub.</td>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>Backend main.py will use FastAPI* hosted on a free tier virtual machine instance in Oracle Cloud*. <a href="main.py" class="start-new-topic-link">A sanitized sample version of the main.py file is available to view in the GitHub repository.</a></td>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>A free domain will be used to connect the frontend and backend.</td>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>The backend will be available via HTTPS through Nginx* and Certbot*.</td>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>A database of vocabulary terms to be used by the AI Agent will be kept in Airtable.</td>
+                </tr>
+                <tr>
+                    <td>Agent</td>
+                    <td>A researcher agent will research and create a summary of any given historical topic.</td>
+                </tr>
+                <tr>
+                    <td>Agent</td>
+                    <td>A writer agent will adapt the summary's language for the specified age group and include a relevant vocabulary term from the database.</td>
+                </tr>
+                <tr>
+                    <td>Agent</td>
+                    <td>A quiz agent will grade the learner's definition based on how the vocabulary word was used in the historical summary. The quiz agent will be positive and encourage continued practice even when incorrect.</td>
+                </tr>
+                <tr>
+                    <td>Content Leveling</td>
+                    <td>Complexity of written content will be determined by age aligned to US schools (elementary, middle, high school, and college/adult -- see Insight note below for more details on why age was used).</td>
+                </tr>
+                <tr>
+                    <td>Content Leveling</td>
+                    <td>Vocabulary will be collected from state and college teaching standards and guidelines to align with recommended vocabulary by grade and age.</td>
+                </tr>
+            </table>
+
+            <h2>Insights from the AI Experiment</h2>
+
+            <h3>Frontend and Web Design</h3>
+
+            <p><strong>Positive:</strong> It was fantastic to not build from scratch when so many elements on the webpage are simple in design and implementation. This allowed me to focus on refining prompts with the AI agents and testing performance.</p>
+            
+            <p><strong>Negative:</strong> There were several items that needed to be tweaked to look the way I wanted. The CSS classes are a bit excessive and some elements had to be adjusted to be accessible. For example, Cline wanted to put green text on a green background for a correct answer in a quiz!</p>
+
+            <h3>Backend</h3>
+
+            <p><strong>Positive:</strong> When I used SSH to access my instance I appreciated having help with commands in real time. I also loved that I could easily ask for detailed explanations while in the flow of work. I felt more comfortable as I got clarity on what packages I was installing, why specific directories had to be made, etc.</p>
+
+            <p><strong>Negative:</strong> I still had to fall back on service documentation and StackOverflow for some answers - especially when troubleshooting items directly in the console.</p>
+
+            <h3>Security</h3>
+
+            <p><strong>Positive:</strong> I was able to run through several options to create simple authentication for my demo before implementation.</p>
+
+            <p><strong>Negative:</strong> Both Gemini and Cline wanted me to put my secrets in my public code! When I asked if that was secure they both agreed it wasn't and then provided better alternatives - but I was concerned I had to know to ask!</p>
+
+            <h3>Troubleshooting</h3>
+
+            <p><strong>Positive:</strong> Loved how Cline easily helped me set up logging in my code so I could see step by step where errors were happening using Google Developer tools. That was a real time saver!</p>
+
+            <p><strong>Negative:</strong> I would get different steps in troubleshooting from Gemini and Cline when using the same prompt - in the end one or the other would help but  it was frustrating to work through both versions and that slowed me down.</p>
+
+            <h3>Prompt Engineering</h3>
+
+            <p><strong>Positive:</strong> Both were good at talking to their kin. They were both helpful in improving my prompts for clarity.</p>
+
+            <p><strong>Negative:</strong> I had to learn to be very exact and slow down with my prompts as they would sometimes improve one thing at the expense of another - this happened more often with Cline since I did allow it to update my code directly.</p>
+
+            <h3>Leveling Content</h3>
+
+            <p><strong>Positive:</strong> Gemini does a decent job leveling written content by age group that it associates with US elementary school, middle school, high school, and college/adult. It was not as clear and more inconsistent when writing this content by specific grades or with more general guidance.</p>
+
+            <p><strong>Negative:</strong> Age is problematic for leveling content for those who do not read at their age level. They could find the age leveling discouraging. It works for this demo but I iterated on this idea in the future I would look at creating a different leveling scale and possibly implement a pretest to help learners find the right fit by skill vs age.</p>
+
+            <h3>Long-term Memory</h3>
+
+            <p><strong>Positive:</strong> Gemini performed much better in our chats at retaining context.</p>
+
+            <p><strong>Negative:</strong> Cline kept asking to reread my files to understand context which was annoying when still working the same task.</p>
+
+            <hr />
+
+            <p>I hope you enjoyed the demo! If you have any follow up questions you can reach me at <a href="mailto:hapundt@gmail.com" class="start-new-topic-link">hapundt@gmail.com.</a></p>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button onclick="window.location.href='index.html'" style="background-color: #7F8CAA; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease;">
+                    Return to History Bytes
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
